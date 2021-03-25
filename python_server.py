@@ -1,6 +1,14 @@
+#!/usr/bin/env python3
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import parse_qs
 import json
 import cgi
+import rospy
+from std_msgs.msg import String
+from labust_msgs.msg import NanomodemRequest
+
+pub = None
 
 class Server(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -8,11 +16,29 @@ class Server(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
         
+    def _publish_to_ros(self, msg):
+        global pub
+        if not pub:
+            print("Publisher not set!")
+            return False
+
+        msg = NanomodemRequest()
+        pub.publish(msg)
+        return True
+
+
     def do_GET(self):
-        self._set_headers()
-        self.wfile.write(str.encode(
-            json.dumps({'test': 'TEST', 'test2': 'TEST2'}))
-        )
+        self._set_headers()        
+        params = parse_qs(self.path[2:])
+        print(params)
+        # CHECK PARAMS
+
+        if self._publish_to_ros(params):
+            self.wfile.write(str.encode(
+                json.dumps({'success': 1, 'test2': 'TEST2'}))
+            )
+        else:
+            return json.dumps({'success': 0})
         
     def do_POST(self):
         ctype, _ = cgi.parse_header(self.headers['content-type'])
@@ -33,11 +59,16 @@ class Server(BaseHTTPRequestHandler):
         # send the message back
         self._set_headers()
         self.wfile.write(str.encode(json.dumps(message)))
-        
+
+def setup_ros(topic_name="nanomodem_request"):
+    global pub
+    pub = rospy.Publisher(topic_name, String, queue_size=10)
+    rospy.init_node('adriatic-comms', anonymous=True)
+
 def run(port=12345):
+    setup_ros()
     server_address = ('', port)
     httpd = HTTPServer(server_address, Server)
-    
     print ('Starting httpd on port %d...' % port)
     httpd.serve_forever()
     
