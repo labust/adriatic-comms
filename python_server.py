@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from urllib.parse import parse_qs
+#from urllib.parse import parse_qs
 import json
 import cgi
 import rospy
@@ -23,16 +23,18 @@ class Server(BaseHTTPRequestHandler):
             return False
 
         msg = NanomodemRequest()
+        msg.id = 11
+        msg.req_type = 3
         pub.publish(msg)
         return True
 
 
     def do_GET(self):
         self._set_headers()        
-        params = parse_qs(self.path[2:])
-        print(params)
+        #params = parse_qs(self.path[2:])
         # CHECK PARAMS
-
+        params = { "test" : "nista"}
+        print(params)
         if self._publish_to_ros(params):
             self.wfile.write(str.encode(
                 json.dumps({'success': 1, 'test2': 'TEST2'}))
@@ -60,9 +62,9 @@ class Server(BaseHTTPRequestHandler):
         self._set_headers()
         self.wfile.write(str.encode(json.dumps(message)))
 
-def setup_ros(topic_name="nanomodem_request"):
+def setup_ros(topic_name="nanomodem1_in"):
     global pub
-    pub = rospy.Publisher(topic_name, String, queue_size=10)
+    pub = rospy.Publisher(topic_name, NanomodemRequest, queue_size=10)
     rospy.init_node('adriatic-comms', anonymous=True)
 
 def run(port=12345):
