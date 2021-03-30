@@ -22,21 +22,25 @@ class Server(BaseHTTPRequestHandler):
             print("Publisher not set!")
             return False
 
-        msg = NanomodemRequest()
-        msg.id = 11
-        msg.req_type = 3
-        pub.publish(msg)
-        return True
-
+        request = NanomodemRequest()
+        request.id = 11
+        request.req_type = 2
+        request.msg = bytearray(msg.encode())
+        pub.publish(request)
 
     def do_GET(self):
         self._set_headers()        
         params = parse_qs(self.path[2:])
-        # CHECK PARAMS
         print(params)
-        if self._publish_to_ros(params):
+        gesture = params["gesture"][0]
+        if not gesture:
+            print("No gesture received")
+            return
+        # CHECK PARAMS
+        print("received gesture: ", gesture)
+        if self._publish_to_ros(gesture):
             self.wfile.write(str.encode(
-                json.dumps({'success': 1, 'test2': 'TEST2'}))
+                json.dumps({'success': 1, 'received_command': gesture }))
             )
         else:
             return json.dumps({'success': 0})
@@ -61,7 +65,7 @@ class Server(BaseHTTPRequestHandler):
     #     self._set_headers()
     #     self.wfile.write(str.encode(json.dumps(message)))
 
-def setup_ros(topic_name="nanomodem1_in"):
+def setup_ros(topic_name="nanomodem_request"):
     global pub
     pub = rospy.Publisher(topic_name, NanomodemRequest, queue_size=10)
     rospy.init_node('adriatic_server', anonymous=False)
