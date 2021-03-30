@@ -1,7 +1,7 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-#from urllib.parse import parse_qs
+from urllib.parse import parse_qs
 import json
 import cgi
 import rospy
@@ -31,9 +31,8 @@ class Server(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers()        
-        #params = parse_qs(self.path[2:])
+        params = parse_qs(self.path[2:])
         # CHECK PARAMS
-        params = { "test" : "nista"}
         print(params)
         if self._publish_to_ros(params):
             self.wfile.write(str.encode(
@@ -42,30 +41,30 @@ class Server(BaseHTTPRequestHandler):
         else:
             return json.dumps({'success': 0})
         
-    def do_POST(self):
-        ctype, _ = cgi.parse_header(self.headers['content-type'])
+    # def do_POST(self):
+    #     ctype, _ = cgi.parse_header(self.headers['content-type'])
         
-        # refuse to receive non-json content
-        if ctype != 'application/json':
-            self.send_response(400)
-            self.end_headers()
-            return
+    #     # refuse to receive non-json content
+    #     if ctype != 'application/json':
+    #         self.send_response(400)
+    #         self.end_headers()
+    #         return
             
-        # read the message and convert it into a python dictionary
-        length = int(self.headers['content-length'])
-        message = json.loads(self.rfile.read(length))
+    #     # read the message and convert it into a python dictionary
+    #     length = int(self.headers['content-length'])
+    #     message = json.loads(self.rfile.read(length))
         
-        # add a property to the object, just to mess with data
-        message['received'] = 'ok'
+    #     # add a property to the object, just to mess with data
+    #     message['received'] = 'ok'
         
-        # send the message back
-        self._set_headers()
-        self.wfile.write(str.encode(json.dumps(message)))
+    #     # send the message back
+    #     self._set_headers()
+    #     self.wfile.write(str.encode(json.dumps(message)))
 
 def setup_ros(topic_name="nanomodem1_in"):
     global pub
     pub = rospy.Publisher(topic_name, NanomodemRequest, queue_size=10)
-    rospy.init_node('adriatic-comms', anonymous=True)
+    rospy.init_node('adriatic_server', anonymous=False)
 
 def run(port=12345):
     setup_ros()
@@ -75,9 +74,8 @@ def run(port=12345):
     httpd.serve_forever()
     
 if __name__ == "__main__":
-    from sys import argv
-    
-    if len(argv) == 2:
-        run(port=int(argv[1]))
-    else:
-        run()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--port', "-p", dest="port", type=int, default="12345")
+    args = parser.parse_args()
+    run(port=args.port)
