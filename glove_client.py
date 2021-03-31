@@ -7,11 +7,11 @@ from std_msgs.msg import String
 from labust_msgs.msg import NanomodemRequest, NanomodemPayload
 
 _gesture_registry = {
-    "d!" : "LEFT",
-    "e!" : "RIGHT",
-    "f!" : "UP",
-    "10" : "DOWN",
-    "11" : "HOLD"
+    "d!" : "HOLD",
+    "e!" : "LEFT",
+    "f!" : "RIGHT",
+    "10" : "FRONT",
+    "11" : "BACK"
     "7!" : "MONITOR"
     "8!" : "SCOOTER_MODE"
     "9!" : "STANDBY"

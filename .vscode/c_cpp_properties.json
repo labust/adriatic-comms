@@ -1,0 +1,50 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/labust/catkin_ws/devel/include/**",
+        "/home/labust/Documents/ros/adriatic/devel/include/**",
+        "/home/labust/Documents/ros/labust/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/acoustics/bit-messaging/include/**",
+        "/home/labust/catkin_ws/src/darknet_ros/darknet_ros/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/diver_detection/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/caddy/diver_net/include/**",
+        "/home/labust/catkin_ws/src/gscam/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/caddy/image_processing_util/include/**",
+        "/home/labust/Documents/ros/adriatic/src/adriatic-ros-pkg/labust-override/labust_allocation/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/estimation/labust_breadcrumb/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_control/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_diagnostics/include/**",
+        "/home/labust/Documents/ros/labust/src/labust-ros-pkg/simulation/labust_diver_sim/include/**",
+        "/home/labust/Documents/ros/labust/src/labust-ros-pkg/control/labust_es_control/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/gazebo/labust_gazebo_adapter/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_geo/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_iso/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_mission/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_nanomodem/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_navigation/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_pointer/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_primitive/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/labust_rosbag/include/**",
+        "/home/labust/Documents/ros/labust/src/labust-ros-pkg/simulation/labust_sim_core/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/caddy/sensors_util/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/labust-override/snippets/include/**",
+        "/home/labust/catkin_ws/src/adriatic-ros-pkg/caddy/sonar_image_processing/include/**",
+        "/home/labust/Documents/ros/adriatic/src/adriatic-ros-pkg/sonar/sonar_processing/include/**",
+        "/home/labust/catkin_ws/src/uuv_simulator/uuv_gazebo_plugins/uuv_gazebo_plugins/include/**",
+        "/home/labust/catkin_ws/src/uuv_simulator/uuv_gazebo_plugins/uuv_gazebo_ros_plugins/include/**",
+        "/home/labust/catkin_ws/src/uuv_simulator/uuv_sensor_plugins/uuv_sensor_ros_plugins/include/**",
+        "/home/labust/catkin_ws/src/uuv_simulator/uuv_world_plugins/uuv_world_plugins/include/**",
+        "/home/labust/catkin_ws/src/uuv_simulator/uuv_world_plugins/uuv_world_ros_plugins/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}

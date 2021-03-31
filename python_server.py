@@ -10,6 +10,20 @@ from labust_msgs.msg import NanomodemRequest
 
 pub = None
 
+_gesture_registry = {
+    "HOLD" : "3",
+    "LEFT" : "7",
+    "RIGHT" : "6",
+    "FRONT" : "4",
+    "BACK" : "5"
+   #"MONITOR" : "7!"
+   #"SCOOTER_MODE" : "8!"
+   #"STANDBY" : "9!"
+   #"START_RECORDING" : "b!"
+   #"STOP_RECORDING" : "c!"
+   #"TAKE_PICTURE" : "a!"
+}
+
 class Server(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
@@ -22,10 +36,11 @@ class Server(BaseHTTPRequestHandler):
             print("Publisher not set!")
             return False
 
+        gesture = _gesture_registry.get(msg, "3")
         request = NanomodemRequest()
         request.id = 11
         request.req_type = 2
-        request.msg = bytearray(msg.encode())
+        request.msg = bytearray(gesture)
         pub.publish(request)
 
     def do_GET(self):
